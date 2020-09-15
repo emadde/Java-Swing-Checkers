@@ -1,5 +1,13 @@
 package com.dtcc.checkers;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import com.sun.java_cup.internal.runtime.Scanner;
+
 public class Model {
 	
 	String [][]board=new String[8][8];
@@ -98,7 +106,31 @@ public class Model {
         	return board;
     }
     
-    public void save(){}
-
+    public void save(){    
+    
+		FileWriter file=null;
+		try {
+			file = new FileWriter("src/com/dtcc/checkers/SavedBoard14.txt");
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		PrintWriter out;
+		try {
+			out = new PrintWriter(file);
+			for(int i = 0; i < board.length; i++)
+			{
+			for(int j = 0; j < board[i].length; j++) {	
+			out.print(board[i][j] + " ");
+				}
+			out.println();
+			}
+			out.flush();
+			out.close();
+		} catch(Exception e) {
+			System.out.println("Exception occured");
+		}
+	}
+	
     public void load(){}
 }
