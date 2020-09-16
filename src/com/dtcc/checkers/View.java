@@ -22,18 +22,29 @@ public class View extends JPanel {
         addMouseListener(new MouseAdapter() {
             // notify controller & model a mouse click has occurred & send click coordinates
             @Override
-            public void mousePressed(MouseEvent me) {
-
-                if(isInBounds(me.getPoint())){
-
-                    if(start == null){
-                        start = me.getPoint();
-                    }
-                    else{
-                        end = me.getPoint();
-                    }
-                }
-
+            public void mousePressed(MouseEvent me)
+            {
+				if(me.getClickCount()>=2)
+				{
+					//System.out.println("Double Click.");
+				}
+				else{
+				    if(isInBounds(me.getPoint()))
+				    {
+				        if(start == null){
+				            start = me.getPoint();
+				        }
+				        else if(end == null){
+				            end = me.getPoint();
+				        }
+				    }
+				    else if(!isInBounds(me.getPoint()))
+				    {
+				    	start=null;
+				    	end=null;
+				    	System.out.println("You are clicking ourside of the board.");
+				    }
+				}
             }
         });
 
