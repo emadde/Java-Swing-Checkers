@@ -198,7 +198,6 @@ public class Utility {
 		}
 		else 
 		{
-			System.out.println("Game is still on.");
 			isGameOver=false;
 		}
 		return isGameOver;
