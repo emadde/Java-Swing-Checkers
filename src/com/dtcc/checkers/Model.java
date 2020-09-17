@@ -131,6 +131,17 @@ public class Model {
 			System.out.println("Exception occured");
 		}
 	}
+    
 	
-    public void load(){}
+    public void load() { 
+    	 //loading saved file  
+        System.out.println("loading your saved game"); 
+        
+        System.load("src/com/dtcc/checkers/SavedBoard14.txt");  
+        
+        System.out.println("loading Finished");  
+      	
+    }
 }
+           
+   
