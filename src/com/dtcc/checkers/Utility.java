@@ -1,21 +1,7 @@
 package com.dtcc.checkers;
 
 public class Utility {
-
 	public static char player;
-	public static void print2DArray(String[][] board) {
-		
-		for(int i=0;i<board.length;i++)
-		{
-			for(int j =0;j<board[i].length;j++)
-			{
-				System.out.print(board[i][j]+" ");
-			}
-			System.out.println();
-		}
-		System.out.println("---------------------------------------------------------------------------------------");
-		
-	}
 	
 	public static boolean checkProperMove(Move move,String[][] board)
 	{
@@ -31,12 +17,7 @@ public class Utility {
 				System.out.println("It is other player's turn : Select Red piece."); isProper=false;
 			}	
 		}
-		//clicking outside of the board.
-		/*
-		 * else if(move.startX>=8 || move.startX <0 || move.endX>=8 || move.endX<0 ) {
-		 * System.out.println("You are clicking ourside of the board."); isProper=false;
-		 * }
-		 */
+
 		//pawn moving in same column.
 		else if(move.endX - move.startX==0 && (move.endY>=0 && move.endY<=7) ||
 				move.endY - move.startY==0 && (move.endX>=0 && move.endX<=7))
@@ -44,7 +25,6 @@ public class Utility {
 			System.out.println("Pawn can not move in same row or same column.");
 			isProper=false; 
 		}
-		//else if(board[move.startY][move.startX]) {return false;} //STILL HAVE TO WORK : MORE ILLEGAL moves.
 		
 		else if(move.endY-move.startY >=3 || move.endY-move.startY <=-3 || move.endX-move.startX==3
 				|| move.endX-move.startX <=-3)	//more than 2 squares move. 
@@ -54,12 +34,12 @@ public class Utility {
 		}
 		else if(board[move.startY][move.startX].equals("R-P") && move.endY <move.startY )	//Red pawn can not move backward
 		{
-			System.out.println("Red pawn can not go backward");
+			System.out.println("Red pawn can not go backwards");
 			isProper=false;
 		}
 		else if(board[move.startY][move.startX].equals("B-P") && move.endY > move.startY )	//Black pawn can not move backward
 		{
-			System.out.println("Black pawn can not go backward");
+			System.out.println("Black pawn can not go backwards");
 			isProper=false;
 		}
 		else if(!(board[move.endY][move.endX].equals("EMPTY")))	//if square already contains a pawn.
@@ -67,15 +47,14 @@ public class Utility {
 			System.out.println("Pawn is present.");
 			isProper=false;
 		}
-		//else if((move.endY - move.startY== 1) || (move.endY - move.startY== -1))
 		else if((move.endY - move.startY== 1) && (move.endX - move.startX==2) || (move.endY - move.startY== 1) && (move.endX - move.startX==-2))
 			{
-				System.out.println("Illegal Move. Line 73");
+				System.out.println("Illegal Move.");
 				isProper=false;
 			}
 		else if((move.endY - move.startY== -1) && (move.endX - move.startX==2) || (move.endY - move.startY== -1) && (move.endX - move.startX==-2))
 			{
-				System.out.println("Illegal Move. Line 78");
+				System.out.println("Illegal Move.");
 				isProper=false;
 			}
 		//}
@@ -90,7 +69,7 @@ public class Utility {
 			
 				if(board[move.startY][move.startX].charAt(0)=='R' && board[(move.startY)+1][(move.startX)+1].charAt(0)=='R')
 				{
-					System.out.println("Red pawn can not jump over same red color pawn...(right side move)"); 
+					System.out.println("Red pawn can not jump over same red color pawn."); 
 					isProper =false;
 				}
 			}
@@ -100,7 +79,7 @@ public class Utility {
 				
 				if(board[move.startY][move.startX].charAt(0)=='R' && board[(move.startY)+1][(move.startX)-1].charAt(0)=='R')
 				{
-					System.out.println("Red pawn can not jump over same red color pawn...(left side move)");
+					System.out.println("Red pawn can not jump over same red color pawn.");
 					isProper=false;	
 				}
 			}
@@ -110,7 +89,7 @@ public class Utility {
 			
 				if(board[move.startY][move.startX].charAt(0)=='B' && board[(move.startY)-1][(move.startX)+1].charAt(0)=='B')
 				{
-					System.out.println("Black pawn can not jump over same black color pawn....(right side move)"); 
+					System.out.println("Black pawn can not jump over same black color pawn."); 
 					isProper=false;
 				}
 			}
@@ -120,7 +99,7 @@ public class Utility {
 				
 				if(board[move.startY][move.startX].charAt(0)=='B' && board[(move.startY)-1][(move.startX)-1].charAt(0)=='B')
 				{
-					System.out.println("Black pawn can not jump over same black color pawn...(left side move)"); 
+					System.out.println("Black pawn can not jump over same black color pawn."); 
 					isProper=false;
 				}
 			}
@@ -139,7 +118,7 @@ public class Utility {
 		{	
 			if((move.endX - move.startX >2) || (move.endX - move.startX< -2))
 			{
-				System.out.println("Illegal move. Line 142");
+				System.out.println("Illegal move.");
 				isProper=false;
 			}
 		}
