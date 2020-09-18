@@ -32,8 +32,9 @@ public class Controller extends JFrame {
                     model.save();
                 }
                 else if(pressedKey == 'l'){
-                    model.load();
-                    view.update(model.getBoard());
+                	// view.update(model.getBoard());
+                	String[][] loadedBoard=model.load();
+                    view.update(loadedBoard);
                 }
             }
         };

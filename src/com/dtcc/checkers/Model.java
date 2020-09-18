@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
 //import com.sun.java_cup.internal.runtime.Scanner;
 
@@ -127,21 +128,40 @@ public class Model {
 			}
 			out.flush();
 			out.close();
+			System.out.println("Game is saved successfully.");
 		} catch(Exception e) {
 			System.out.println("Exception occured");
 		}
 	}
     
 	
-    public void load() { 
-    	 //loading saved file  
-        System.out.println("loading your saved game"); 
-        
-        System.load("src/com/dtcc/checkers/SavedBoard14.txt");  
-        
-        System.out.println("loading Finished");  
+    public String[][] load() { 
+    	File file =null;
+    	try {
+
+    		file=new File("src/com/dtcc/checkers/SavedBoard14.txt");
+    		Scanner input=new Scanner(file);
+    		while(input.hasNextLine())
+        	{
+    			for(int i=0;i<board.length;i++)
+    			{
+    				String[] line=input.nextLine().trim().split(" ");
+    				for(int j=0; j<line.length; j++)
+    				{
+    					board[i][j]=line[j];
+    				}
+    			}
+        	}
+    		input.close();
+    		System.out.println("Game is loaded successfully.");
+    	}
+    	
+    	catch(Exception e)
+    	{
+    		System.out.println("ERROR: No text file found to load the game.");
+    	}
+		return board;
       	
     }
 }
            
-   
