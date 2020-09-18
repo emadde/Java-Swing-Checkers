@@ -42,7 +42,7 @@ public class View extends JPanel {
 				    {
 				    	start=null;
 				    	end=null;
-				    	System.out.println("You are clicking ourside of the board.");
+				    	//System.out.println("You have clicked outside of the board.");
 				    }
 				}
             }
