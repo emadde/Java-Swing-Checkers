@@ -22,14 +22,19 @@ public class Controller extends JFrame {
                 char pressedKey = view.getPressedKey();
                 if(view.isMoveSelected()){
                     String[][] board = model.update(view.getMove());
-                    view.update(board);
+                    if(Utility.isGameOver(board)) {
+                    	Utility.setPlayer('\0');
+                    	view.update(model.getBoard());
+                    }
+                    else {view.update(board);}
                 }
                 else if(pressedKey == 's'){
                     model.save();
                 }
                 else if(pressedKey == 'l'){
-                    model.load();
-                    view.update(model.getBoard());
+                	// view.update(model.getBoard());
+                	String[][] loadedBoard=model.load();
+                    view.update(loadedBoard);
                 }
             }
         };

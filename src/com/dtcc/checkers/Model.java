@@ -1,12 +1,14 @@
 package com.dtcc.checkers;
 
 import java.io.File;
+
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Scanner;
 
-import com.sun.java_cup.internal.runtime.Scanner;
+//import com.sun.java_cup.internal.runtime.Scanner;
 
 public class Model {
 	
@@ -16,73 +18,72 @@ public class Model {
     	if(!Utility.checkProperMove(move,board)) {return board;}
     	else
     	{
-    	Utility.setPlayer(board[move.startY][move.startX].charAt(0));
-    	//one diagonal move.
+    		Utility.setPlayer(board[move.startY][move.startX].charAt(0));
+	    	//one diagonal move.
+	    	if(move.endY - move.startY==1 || move.endY -move.startY == -1)
+	    	{
+		    	if(board[move.startY][move.startX].equals("R-P"))
+		    	{
+		    		board[move.startY][move.startX]="EMPTY";
+		        	board[move.endY][move.endX]="R-P";
+		    	}
+		    	else if(board[move.startY][move.startX].equals("B-P"))
+		    	{
+		    		board[move.startY][move.startX]="EMPTY";
+		        	board[move.endY][move.endX]="B-P";
+		    	}
+		    	else if(board[move.startY][move.startX].equals("R-K"))
+		    	{
+		    		board[move.startY][move.startX]="EMPTY";
+		        	board[move.endY][move.endX]="R-K";
+		    	}
+		    	else if(board[move.startY][move.startX].equals("B-K"))
+		    	{
+		    		board[move.startY][move.startX]="EMPTY";
+		        	board[move.endY][move.endX]="B-K";
+		    	}
+	    	}
     	
-    	if(move.endY - move.startY==1 || move.endY -move.startY == -1)
-    	{
-	    	if(board[move.startY][move.startX].equals("R-P"))
+	    	//if a pawn jumps over other pawn.
+	    	else if(move.endY - move.startY== 2 || move.endY -move.startY == -2)
 	    	{
-	    		board[move.startY][move.startX]="EMPTY";
-	        	board[move.endY][move.endX]="R-P";
-	    	}
-	    	else if(board[move.startY][move.startX].equals("B-P"))
-	    	{
-	    		board[move.startY][move.startX]="EMPTY";
-	        	board[move.endY][move.endX]="B-P";
-	    	}
-	    	else if(board[move.startY][move.startX].equals("R-K"))
-	    	{
-	    		board[move.startY][move.startX]="EMPTY";
-	        	board[move.endY][move.endX]="R-K";
-	    	}
-	    	else if(board[move.startY][move.startX].equals("B-K"))
-	    	{
-	    		board[move.startY][move.startX]="EMPTY";
-	        	board[move.endY][move.endX]="B-K";
-	    	}
-    	}
-    	
-    	//if a pawn jumps over other pawn.
-    	else if(move.endY - move.startY== 2 || move.endY -move.startY == -2)
-    	{
-    		int newRow=(move.endY + move.startY) / 2;
-    		int newCol= (move.endX + move.startX) / 2;
-    		board[newRow][newCol]="EMPTY";
+	    		int newRow=(move.endY + move.startY) / 2;
+	    		int newCol= (move.endX + move.startX) / 2;
+	    		board[newRow][newCol]="EMPTY";
     		
-    		if(board[move.startY][move.startX].equals("R-P")) 
-	        { 
-    			board[move.endY][move.endX]="R-P";
-    			board[move.startY][move.startX]="EMPTY";
-	        }
-	    	else if(board[move.startY][move.startX].equals("B-P")) 
-	        {	
-	    		board[move.endY][move.endX]="B-P";
-	    		board[move.startY][move.startX]="EMPTY";
-	        }
-	    	else if(board[move.startY][move.startX].equals("R-K")) 
-	        { 
-    			board[move.endY][move.endX]="R-K";
-    			board[move.startY][move.startX]="EMPTY";
-	        }
-	    	else if(board[move.startY][move.startX].equals("B-K")) 
-	        { 
-    			board[move.endY][move.endX]="B-K";
-    			board[move.startY][move.startX]="EMPTY";
-	        }
-    	}
+	    		if(board[move.startY][move.startX].equals("R-P")) 
+	    		{ 
+	    			board[move.endY][move.endX]="R-P";
+	    			board[move.startY][move.startX]="EMPTY";
+	    		}
+	    		else if(board[move.startY][move.startX].equals("B-P")) 
+	    		{	
+	    			board[move.endY][move.endX]="B-P";
+	    			board[move.startY][move.startX]="EMPTY";
+	    		}
+	    		else if(board[move.startY][move.startX].equals("R-K")) 
+	    		{ 
+	    			board[move.endY][move.endX]="R-K";
+	    			board[move.startY][move.startX]="EMPTY";
+	    		}
+	    		else if(board[move.startY][move.startX].equals("B-K")) 
+	    		{ 
+	    			board[move.endY][move.endX]="B-K";
+	    			board[move.startY][move.startX]="EMPTY";
+	    		}
+	    	}
     	
-    	//Black pawn turns black king
-    	if (move.endY == 0 && board[move.endY][move.endX].charAt(0) =='B' )
-            //board[move.startY][move.startX] = "B-K";
-    		board[move.endY][move.endX] = "B-K";
+	    	//Black pawn turns black king
+	    	if (move.endY == 0 && board[move.endY][move.endX].charAt(0) =='B' )
+	    		//board[move.startY][move.startX] = "B-K";
+	    		board[move.endY][move.endX] = "B-K";
     	
-    	//Red pawn turns red King
-        if (move.endY == 7 &&board[move.endY][move.endX].charAt(0) =='R')
+	    	//Red pawn turns red King
+	    	if (move.endY == 7 &&board[move.endY][move.endX].charAt(0) =='R')
         	//board[move.startY][move.startX] = "R-K";
-        	board[move.endY][move.endX] = "R-K";
+	    		board[move.endY][move.endX] = "R-K";
 
-    	return board;
+	    	return board;
     	}
     }
 
@@ -127,10 +128,40 @@ public class Model {
 			}
 			out.flush();
 			out.close();
+			System.out.println("Game is saved successfully.");
 		} catch(Exception e) {
 			System.out.println("Exception occured");
 		}
 	}
+    
 	
-    public void load(){}
+    public String[][] load() { 
+    	File file =null;
+    	try {
+
+    		file=new File("src/com/dtcc/checkers/SavedBoard14.txt");
+    		Scanner input=new Scanner(file);
+    		while(input.hasNextLine())
+        	{
+    			for(int i=0;i<board.length;i++)
+    			{
+    				String[] line=input.nextLine().trim().split(" ");
+    				for(int j=0; j<line.length; j++)
+    				{
+    					board[i][j]=line[j];
+    				}
+    			}
+        	}
+    		input.close();
+    		System.out.println("Game is loaded successfully.");
+    	}
+    	
+    	catch(Exception e)
+    	{
+    		System.out.println("ERROR: No text file found to load the game.");
+    	}
+		return board;
+      	
+    }
 }
+           
